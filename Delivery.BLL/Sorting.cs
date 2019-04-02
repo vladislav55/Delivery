@@ -18,7 +18,7 @@ namespace Delivery.BLL
 
             var right = new List<DeliveryBlock>(unsorted);
 
-            for (int i = 0; i < unsorted.Count();)
+            for (int i = 0; i < unsorted.Count;)
             {
                 var result = FindByDeparture(right);
 
@@ -49,8 +49,18 @@ namespace Delivery.BLL
             {
                 if (left.Departure == right[i].Arrival)
                 {
-                    right.Insert(i + 1, left);
-                    right.RemoveAt(0);
+                    var temp = right[i];
+
+                    right[i] = left;
+
+                    for (int y = i - 1; y >= 0; y--)
+                    {
+                        var temp2 = right[y];
+
+                        right[y] = temp;
+
+                        temp = temp2;
+                    }
 
                     return right;
                 }
